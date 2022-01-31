@@ -57,16 +57,12 @@ class ParsedItem:
      item_name = item_price.attrs['price1']
      return  item_name
 
-  def rating ():
-    locator = 'article.product p.star rating'
-    rating = soup.select_one(locator)
-    classes = rating.attrs['class']
-    rating_classes = [r for r in classes if r != 'star rating']
-    print(rating_classes[0])
+
 
 item = ParsedItem(NORMAL_HTML)
 print(item.name)
-
+print(item.img_link)
+print(item.price)
 
 
 
