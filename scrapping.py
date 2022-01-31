@@ -30,46 +30,47 @@ NORMAL_HTML = '''<html lang="en">
 
 </body>
 </html>'''
+class ParsedItemLocators:
+    Name_locator = 'article.product img '
+    img_link = 'article.product img.resize'
+    price_locator = 'article.product p.price'
+class ParsedItem:
+   def __init__(self, page):
+       self.soup = BeautifulSoup(page, 'html.parser')
+   @property
+   def name(self):
+     locator = ParsedItemLocators.Name_locator
+     item_link = self.soup.select_one(locator)
+     item_name = item_link.attrs['title']
+     return item_name
 
-soup = BeautifulSoup(NORMAL_HTML, 'html.parser')
+   @property
+   def img_link(self):
+     locator = ParsedItemLocators.img_link
+     item_link = self.soup.select_one(locator)
+     item_name = item_link.attrs['src']
+     return  item_name
+   @property
+   def price(self):
+     locator = ParsedItemLocators.price_locator
+     item_price = self.soup.select_one(locator)
+     item_name = item_price.attrs['price1']
+     return  item_name
 
-def find_title_name():
-    locator = 'article.product img '
-    item_link = soup.select_one(locator)
-    item_name = item_link.attrs['title']
-    print(item_name)
-
-
-def img_link():
-    locator = 'article.product img.resize'
-    item_link = soup.select_one(locator)
-    item_name = item_link.attrs['src']
-    print(item_name)
-
-def find_price():
-    locator = 'article.product p.price'
-    item_price = soup.select_one(locator)
-    item_name = item_price.attrs['price1']
-    print(item_name)
-
-def find_rating ():
+  def rating ():
     locator = 'article.product p.star rating'
     rating = soup.select_one(locator)
     classes = rating.attrs['class']
     rating_classes = [r for r in classes if r != 'star rating']
     print(rating_classes[0])
 
-#find_rating()
+item = ParsedItem(NORMAL_HTML)
+print(item.name)
 
 
 
 
 
-
-
-find_price()
-img_link()
-find_title_name()
 
 
 
